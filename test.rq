@@ -1,0 +1,18 @@
+#+ endpoint: http://fuseki:3030/reflexion/query
+#+ method: GET
+#+ summary: Retrieves recommended settings for MRData.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ref: <http://purl.org/vocab/relationship/>
+
+SELECT ?data ?recommendedsetting 
+WHERE {
+ 
+  ?data a refl:MrScan.
+#  ?data a ?classtype.
+#  ?data a refl:LumbarSpineScan.
+  ?data refl:hasRecommendedSetting ?recommendedsetting
+}
+LIMIT 25
