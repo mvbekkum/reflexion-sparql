@@ -7,11 +7,11 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX refl: <http://localhost/reflexion/acr#>
 
-SELECT ?data ?recommendedsetting 
+SELECT ?data  
 WHERE {
   ?data a refl:MrScan.
 #  ?data a ?classtype.
 #  ?data a refl:LumbarSpineScan.
-  ?data refl:hasRecommendedSetting ?recommendedsetting
+#  ?data refl:hasRecommendedSetting ?recommendedsetting
 }
 LIMIT 25
