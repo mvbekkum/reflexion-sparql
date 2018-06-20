@@ -10,8 +10,6 @@ PREFIX refl: <http://reflexion/acr#>
 SELECT ?data ?recommendedsetting
 WHERE {
   ?data a refl:MrScan.
-#  ?data a ?classtype.
-#  ?data a refl:LumbarSpineScan.
-?data refl:hasRecommendedSetting ?recommendedsetting
+  ?data refl:hasRecommendedSetting ?recommendedsetting
 }
-LIMIT 25
+
