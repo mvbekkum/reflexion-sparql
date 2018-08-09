@@ -1,4 +1,3 @@
-#+ endpoint: http://fuseki:3030/reflexion/query
 #+ method: GET
 #+ summary: Retrieves values of quality parameters for MR scan data.
 
