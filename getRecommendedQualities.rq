@@ -1,4 +1,4 @@
-#+ endpoint: http://fuseki:3030/reflexion/query
+#+ endpoint: http://interop-test.sensorlab.tno.nl:3030/reflexion/query
 #+ method: GET
 #+ summary: Retrieves recommended qualities (non body-part specific).
 
