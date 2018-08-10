@@ -1,6 +1,6 @@
 #+ endpoint: http://fuseki:3030/reflexion/query
 #+ method: GET
-#+ summary: Retrieves compliant qualites for MR scan data, based on compliance to ACR guidelines.
+#+ summary: Retrieves compliant qualities for MR scan data, based on compliance to ACR guidelines.
 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
