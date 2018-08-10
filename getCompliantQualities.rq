@@ -10,12 +10,14 @@ PREFIX re: <http://www.w3.org/2000/10/swap/reason#>
 PREFIX ref: <http://purl.org/vocab/relationship/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-SELECT DISTINCT ?scan ?quality (?specquality AS ?recquality)
+SELECT DISTINCT ?scan ?label 
 WHERE {
-  ?specquality rdfs:subClassOf+ refl:recommended-quality.  
-  FILTER NOT EXISTS {
+	?specquality rdfs:subClassOf+ refl:recommended-quality.  
+  	FILTER NOT EXISTS {
     ?specquality rdfs:subClassOf+ [rdfs:subClassOf+ refl:recommended-quality].
   }
-  ?scan ?property ?quality; a refl:MR-scan-result.
+  ?property rdfs:subPropertyOf refl:acr-property.
+  ?scan a refl:MR-scan-result; ?property ?quality.
   ?quality a ?specquality.
+  ?specquality rdfs:label ?label.
 }
