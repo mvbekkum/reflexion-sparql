@@ -1,6 +1,6 @@
 #+ endpoint: http://fuseki:3030/reflexion/query
 #+ method: GET
-#+ summary: Retrieves scan type for MR scan data.
+#+ summary: Retrieves inferred scan type for MR scan data, based on comformance to guidelines.
 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
