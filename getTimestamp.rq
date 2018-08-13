@@ -1,6 +1,6 @@
 #+ endpoint: http://fuseki:3030/reflexion/query
 #+ method: GET
-#+ summary: Retrieves MR scan data with timestamp.
+#+ summary: Retrieves Timestamp for MR scan data .
 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
