@@ -1,0 +1,21 @@
+#+ endpoint: http://fuseki:3030/reflexion/query
+#+ method: GET
+#+ summary: Retrieves MR scan data with timestamp.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX refl: <http://reflexion/acr#>
+PREFIX re: <http://www.w3.org/2000/10/swap/reason#>
+PREFIX ref: <http://purl.org/vocab/relationship/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX neurolog-dolce: 
+<http://neurolog.unice.fr/ontoneurolog/v3.0/ontoneurolog-extension-of-dolce.owl#>
+PREFIX neurolog-data: <http://neurolog.unice.fr/ontoneurolog/v3.0/ontoneurolog-mr-dataset-acquisition.owl#> 
+
+SELECT ?scan ?timestamp
+WHERE {
+ 
+  ?scan a refl:MR-scan-result; neurolog-dolce:has-for-date [refl:acr-has-data-value ?timestamp].
+  
+}
