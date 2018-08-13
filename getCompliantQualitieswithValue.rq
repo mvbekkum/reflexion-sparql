@@ -13,7 +13,7 @@ PREFIX neurolog-dolce:
 <http://neurolog.unice.fr/ontoneurolog/v3.0/ontoneurolog-extension-of-dolce.owl#>
 PREFIX neurolog-data: <http://neurolog.unice.fr/ontoneurolog/v3.0/ontoneurolog-mr-dataset-acquisition.owl#> 
 
-SELECT DISTINCT ?scan ?label ?quality_value
+SELECT DISTINCT ?scan ?compliant_quality ?quality_value
 WHERE {
 	?specquality rdfs:subClassOf+ refl:recommended-quality.  
   	FILTER NOT EXISTS {
@@ -22,7 +22,7 @@ WHERE {
   ?property rdfs:subPropertyOf refl:acr-property.
   ?scan a refl:MR-scan-result; ?property ?quality.
   ?quality a ?specquality.
-  ?specquality rdfs:label ?label.
+  ?specquality rdfs:label ?compliant_quality.
   OPTIONAL {
     ?quality refl:acr-has-data-value ?value.
     BIND (str(?value) AS ?quality_value).
