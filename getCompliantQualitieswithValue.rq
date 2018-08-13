@@ -1,6 +1,6 @@
 #+ endpoint: http://fuseki:3030/reflexion/query
 #+ method: GET
-#+ summary: Retrieves compliant qualities with values for MR scan data.
+#+ summary: Retrieves qualities with values for MR scan data.
 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -13,22 +13,27 @@ PREFIX neurolog-dolce:
 <http://neurolog.unice.fr/ontoneurolog/v3.0/ontoneurolog-extension-of-dolce.owl#>
 PREFIX neurolog-data: <http://neurolog.unice.fr/ontoneurolog/v3.0/ontoneurolog-mr-dataset-acquisition.owl#> 
 
-SELECT DISTINCT ?scan ?compliant_quality ?quality_value
+SELECT DISTINCT ?scan ?quality_label ?quality_value
 WHERE {
-	?specquality rdfs:subClassOf+ refl:recommended-quality.  
-  	FILTER NOT EXISTS {
-    ?specquality rdfs:subClassOf+ [rdfs:subClassOf+ refl:recommended-quality].
-  }
-  ?property rdfs:subPropertyOf refl:acr-property.
-  ?scan a refl:MR-scan-result; ?property ?quality.
-  ?quality a ?specquality.
-  ?specquality rdfs:label ?compliant_quality.
+ 
+  ?acr_property rdfs:subPropertyOf refl:acr-property.
+  ?acr_property rdfs:range ?range.
+  
+  ?scan a refl:MR-scan-result.
+  ?scan ?acr_property ?quality.
+  BIND (strafter(str(?range),"#") AS ?quality_label1). 
+ 
   OPTIONAL {
-    ?quality refl:acr-has-data-value ?value.
-    BIND (str(?value) AS ?quality_value).
+    ?quality refl:acr-has-data-value ?value1.
+    BIND(str("") AS ?quality_label2).
+    BIND (str(?value1) AS ?quality_value).
   }
   OPTIONAL {
-    ?quality ?property2 [neurolog-dolce:has-for-name ?value].
-    BIND (strafter(str(?value),"#") AS ?quality_value).
+    ?quality ?property2 [neurolog-dolce:has-for-name ?value2].
+    ?property2 rdfs:range ?range2.
+    BIND (CONCAT("/"^^xsd:string,strafter(str(?range2),"#")) AS ?quality_label2).
+    BIND (strafter(str(?value2),"#") AS ?quality_value).
   }
+
+  BIND(CONCAT(str(?quality_label1), str(?quality_label2)) AS ?quality_label).
 }
