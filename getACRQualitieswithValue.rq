@@ -1,0 +1,29 @@
+#+ endpoint: http://fuseki:3030/reflexion/query
+#+ endpoint_in_url: False
+#+ method: GET
+#+ summary: Retrieves scan qualities that appear in the guidelines and are part of the model (body-part specific).
+#+ summary: Includes boundary values of restrictions.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX refl: <http://reflexion/acr#>
+PREFIX re: <http://www.w3.org/2000/10/swap/reason#>
+PREFIX ref: <http://purl.org/vocab/relationship/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?specquality ?value ?operator
+WHERE {
+  ?specquality rdfs:subClassOf refl:recommended-quality.
+  ?specquality owl:equivalentClass [owl:intersectionOf [rdf:rest [rdf:first ?restriction2]]].
+  ?restriction2 owl:someValuesFrom [owl:withRestrictions [rdf:first [?boundary ?value]]].
+  
+  BIND (
+  COALESCE(
+      IF(regex(str(?boundary), 'max'), "<=", 1/0),
+      IF(regex(str(?boundary), 'min'), ">=", 1/0),
+    "="
+  ) AS ?operator
+)
+  
+}
