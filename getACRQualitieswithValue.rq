@@ -12,7 +12,7 @@ PREFIX re: <http://www.w3.org/2000/10/swap/reason#>
 PREFIX ref: <http://purl.org/vocab/relationship/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-SELECT ?specquality ?operator ?value
+SELECT ?quality ?operator ?value
 WHERE {
   ?specquality rdfs:subClassOf refl:recommended-quality.
   BIND(strafter(str(?specquality),"#") AS ?quality).
