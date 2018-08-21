@@ -12,11 +12,11 @@ PREFIX re: <http://www.w3.org/2000/10/swap/reason#>
 PREFIX ref: <http://purl.org/vocab/relationship/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
-SELECT ?specquality ?value ?operator
+SELECT ?specquality ?operator ?value
 WHERE {
   ?specquality rdfs:subClassOf refl:recommended-quality.
   ?specquality owl:equivalentClass [owl:intersectionOf [rdf:rest [rdf:first ?restriction2]]].
-  ?restriction2 owl:someValuesFrom [owl:withRestrictions [rdf:first [?boundary ?value]]].
+  ?restriction2 owl:someValuesFrom [owl:withRestrictions [rdf:first [?boundary ?v]]].
   
   BIND (
   COALESCE(
@@ -25,5 +25,7 @@ WHERE {
     "="
   ) AS ?operator
 )
+  
+  BIND(strafter(str(?v),"#") AS ?value).
   
 }
