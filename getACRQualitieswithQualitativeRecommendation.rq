@@ -1,0 +1,73 @@
+#+ endpoint: http://fuseki:3030/reflexion/query
+#+ endpoint_in_url: False
+#+ method: GET
+#+ summary: Retrieves scan qualities that appear in the guidelines and are part of the model (body-part specific). Includes qualitative restrictions as recommendations.
+
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX refl: <http://reflexion/acr#>
+PREFIX re: <http://www.w3.org/2000/10/swap/reason#>
+PREFIX ref: <http://purl.org/vocab/relationship/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ordf: <http://purl.org/NET/ordf/>
+
+SELECT ?quality ?property11 ?value11 ?operator1 ?property12 ?value12 ?operator2 ?property21 ?value21
+WHERE {
+  ?specquality rdfs:subClassOf refl:recommended-quality.
+  BIND(strafter(str(?specquality),"#") AS ?quality).
+  
+  ?specquality owl:equivalentClass [?op2 [rdf:first ?restriction1; rdf:rest ?restriction2]].
+  BIND (
+  COALESCE(
+      IF(regex(str(?op2), 'union'), "OR", 1/0),
+      IF(regex(str(?op2), 'intersection'), "AND", 1/0),
+    "="
+  ) AS ?operator2
+)
+  
+  ?restriction1 ?op1 [rdf:first ?part11; rdf:rest ?part12].
+  BIND (
+  COALESCE(
+      IF(regex(str(?op1), 'union'), "OR", 1/0),
+      IF(regex(str(?op1), 'intersection'), "AND", 1/0),
+    "="
+  ) AS ?operator1
+)
+  
+  ?part11 owl:onProperty ?prop11; owl:someValuesFrom [owl:unionOf [rdf:first [owl:hasValue ?val111]; rdf:rest [ rdf:first [owl:hasValue ?val112]]]].	
+  BIND (
+  COALESCE(
+      IF(regex(str(?prop11), 'orientation'), "slice orientation", 1/0),
+      IF(regex(str(?prop11), 'thickness'), "slice thickness", 1/0),
+      IF(regex(str(?prop11), 'spacing'), "slice spacing", 1/0),
+      IF(regex(str(?prop11), 'contrast'), "contrast", 1/0),      
+    ""
+  ) AS ?property11
+)
+  BIND(CONCAT(strafter(str(?val111),"#"),",",strafter(str(?val112),"#")) AS ?value11).
+  
+  ?part12 rdf:first [owl:onProperty ?prop12; owl:someValuesFrom [owl:hasValue ?val12]].
+  BIND (
+  COALESCE(
+      IF(regex(str(?prop12), 'orientation'), "slice orientation", 1/0),
+      IF(regex(str(?prop12), 'thickness'), "slice thickness", 1/0),
+      IF(regex(str(?prop12), 'spacing'), "slice spacing", 1/0),
+      IF(regex(str(?prop12), 'contrast'), "contrast", 1/0),      
+    ""
+  ) AS ?property12
+)
+   BIND(strafter(str(?val12),"#") AS ?value12).
+  
+  ?restriction2 rdf:first [owl:onProperty ?prop21; owl:someValuesFrom [owl:hasValue ?val21]].
+  BIND (
+  COALESCE(
+      IF(regex(str(?prop21), 'orientation'), "slice orientation", 1/0),
+      IF(regex(str(?prop21), 'thickness'), "slice thickness", 1/0),
+      IF(regex(str(?prop21), 'spacing'), "slice spacing", 1/0),
+      IF(regex(str(?prop21), 'contrast'), "contrast", 1/0),      
+    ""
+  ) AS ?property21
+)
+   BIND(strafter(str(?val21),"#") AS ?value21).
+}
