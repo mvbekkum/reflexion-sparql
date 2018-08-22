@@ -1,8 +1,7 @@
 #+ endpoint: http://fuseki:3030/reflexion/query
 #+ endpoint_in_url: False
 #+ method: GET
-#+ summary: Retrieves scan qualities that appear in the guidelines and are part of the model (body-part specific).
-#+ summary: Includes boundary values of quantified restrictions.
+#+ summary: Retrieves scan qualities that appear in the guidelines and are part of the model (body-part specific). Includes quantitative restrictions as recommendations.
 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
