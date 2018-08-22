@@ -16,6 +16,6 @@ PREFIX neurolog-data: <http://neurolog.unice.fr/ontoneurolog/v3.0/ontoneurolog-m
 SELECT ?scan ?timestamp
 WHERE {
  
-  ?scan a refl:MR-scan-result; neurolog-dolce:has-for-date [refl:acr-has-data-value ?timestamp].
-  
+  ?sc a refl:MR-scan-result; neurolog-dolce:has-for-date [refl:acr-has-data-value ?timestamp].
+  BIND(strafter(str(?sc),"#") AS ?scan).
 }
