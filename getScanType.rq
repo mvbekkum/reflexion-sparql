@@ -12,9 +12,11 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT DISTINCT ?scan ?scantype
 WHERE {
- ?scan a refl:MR-scan-result.
+ ?sc a refl:MR-scan-result.
  OPTIONAL {
-    ?scantype rdfs:subClassOf+ refl:MR-scan-result.
- 	?scan a ?scantype.
+    ?type rdfs:subClassOf+ refl:MR-scan-result.
+ 	?sc a ?type.
   }
+  BIND(strafter(str(?sc),"#") AS ?scan).
+  BIND(strafter(str(?type),"#") AS ?scantype).
 }
